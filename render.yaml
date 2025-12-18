@@ -1,10 +1,10 @@
 services:
   - type: web
     name: n8n
-    env: docker
-    repo: https://github.com/n8nio/n8n # On utilise l'image officielle directement
-    plan: free # Vous pouvez changer en 'starter' plus tard si besoin
-    region: frankfurt # Choisissez la région la plus proche (oregon, frankfurt, etc.)
+    env: image
+    image: n8nio/n8n:latest # On utilise l'image Docker directement
+    plan: free
+    region: frankfurt
     envVars:
       - key: N8N_ENCRYPTION_KEY
         generateValue: true
