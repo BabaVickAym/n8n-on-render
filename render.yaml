@@ -1,21 +1,26 @@
 services:
   - type: web
     name: n8n
-    env: image
-    image: n8nio/n8n:latest
+    env: docker
     plan: free
-    region: frankfurt
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
+    startCommand: n8n
     envVars:
-      - key: N8N_ENCRYPTION_KEY
-        generateValue: true
-      - key: N8N_USER_MANAGEMENT_JWT_SECRET
-        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: "1"
+      - key: NODE_ENV
+        value: production
+      - key: N8N_BASIC_AUTH_ACTIVE
+        value: "true"
+      - key: N8N_BASIC_AUTH_USER
+        value: "admin"
+      - key: N8N_BASIC_AUTH_PASSWORD
+        value: "admin123" # Changez ce mot de passe plus tard !
+      - key: GENERIC_TIMEZONE
+        value: Africa/Douala
       - key: DB_TYPE
         value: postgresdb
-      - key: DB_POSTGRESDB_DATABASE
-        fromDatabase:
-          name: n8n-db
-          property: database
       - key: DB_POSTGRESDB_HOST
         fromDatabase:
           name: n8n-db
@@ -24,6 +29,10 @@ services:
         fromDatabase:
           name: n8n-db
           property: port
+      - key: DB_POSTGRESDB_DATABASE
+        fromDatabase:
+          name: n8n-db
+          property: database
       - key: DB_POSTGRESDB_USER
         fromDatabase:
           name: n8n-db
@@ -32,6 +41,14 @@ services:
         fromDatabase:
           name: n8n-db
           property: password
+      - key: N8N_ENCRYPTION_KEY
+        value: une_cle_tres_secrete_et_longue # Mettez une suite de lettres au hasard ici
+      - key: N8N_RUNNERS_ENABLED
+        value: "true"
+      - key: N8N_BLOCK_ENV_ACCESS_IN_NODE
+        value: "false"
+      - key: N8N_GIT_NODE_DISABLE_BARE_REPOS
+        value: "true"
 
 databases:
   - name: n8n-db
