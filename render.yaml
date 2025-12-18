@@ -2,7 +2,7 @@ services:
   - type: web
     name: n8n
     env: image
-    image: n8nio/n8n:latest # On utilise l'image Docker directement
+    image: n8nio/n8n:latest
     plan: free
     region: frankfurt
     envVars:
